@@ -1,0 +1,37 @@
+
+solve;
+display _varname, _var
+
+set PROD ;# products
+
+param rate {PROD} >= 0, <=7 ;
+
+param avail >=0,<=40;
+
+param profit {PROD};
+
+param market {PROD} >= 0 ;
+
+var Make {p in PROD} >= 0, <= market[p];
+
+maximize Z: sum {p in PROD} profit[p] * Make[p] ;
+
+subject to Time: sum {p in PROD} (1/rate[p]) * Make[p] <= avail ;
+
+data;
+
+set PROD := X1 X2 X3 X4 X5;
+
+param: rate profit market :=
+
+X1 2 10 44
+
+X2 1 8 46
+
+X3 2 9 33
+
+X4 1 7 45
+
+X5 1 8 59;
+
+param avail := 40;
